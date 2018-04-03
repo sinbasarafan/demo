@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property resource="application.properties" />
+    <property resource="${spring.profiles.active}/logback.properties" />
+    <contextName>${logback.name}</contextName>
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--输出到文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="${logback.rolling.policy}">
+            <fileNamePattern>${logback.dir}/${logback.name}.%d{yyyy-MM-dd}.log</fileNamePattern>  
+			<maxHistory>${logback.max.history}</maxHistory>
+			<totalSizeCap>${logback.total.size}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	<!-- 设置日志的默认打印级别为INFO -->
+    <root level="info">
+        <appender-ref ref="file" />
+        <appender-ref ref="console" />
+    </root>
+    
+    <!-- log4jdbc-log4j2设置只打印sqltiming的数值 -->
+    <logger name="jdbc.connection" level="OFF" />
+	<logger name="jdbc.audit" level="OFF" />
+	<logger name="jdbc.resultset" level="OFF" />
+	<logger name="jdbc.sqlonly" level="OFF" />
+	<logger name="jdbc.sqltiming" level="${log4jdbc.sqltiming.level}" />
+	<logger name="jdbc.resultsettable" level="${log4jdbc.resultsettable.level}"/>
+</configuration>

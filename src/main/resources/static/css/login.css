@@ -1,0 +1,6 @@
+body {
+	background: url("../img/1.jpg");
+}
+.form {background: rgba(255,255,255,0.4);width:350px;min-width:350px;margin:120px auto;}
+input[type="text"],input[type="password"] {padding-left:26px;}
+.checkbox {padding-left:21px;}
